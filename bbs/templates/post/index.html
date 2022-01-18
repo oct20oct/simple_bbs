@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ post['title'] }}</h1>
+<p>by <a href="{{ url_for('profile.person',id=post['author_id']) }}">{{ post['username'] }}</a> on {{ post['created'].strftime('%Y-%m-%d, %H:%M:%S') }}</p>
+<p>{{ post['body'] }}</p>
+
+<h2>comment section</h2>
+{% for comment in comments %}
+<p>by <a href="{{ url_for('profile.person',id=post['author_id']) }}">{{ comment['username'] }}</a> on {{ comment['created'].strftime('%Y-%m-%d, %H:%M:%S') }}</p>
+<p>{{ comment['body'] }}</p>
+{% endfor %}
+{{ pagination.info }}
+{{ pagination.links }}
+
+  <h2>{% block title %}Add a comment{% endblock %}</h2>
+
+
+
+  <form method="post">
+    <label for="body">Add a comment</label>
+    <textarea name="body" id="body">{{ request.form['body'] }}</textarea>
+    <input type="submit" value="Submit">
+  </form>
+{% endblock %}
